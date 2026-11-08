@@ -1,0 +1,173 @@
+
+<section class="seccion-bebidas">
+
+  <!-- Modal de confirmación -->
+  <div class="modal-carrito" *ngIf="mensajeCarrito">
+    <div class="modal-icono">
+      <i class="bi bi-check-lg"></i>
+    </div>
+
+    <div class="modal-contenido">
+      <h6>¡Producto agregado!</h6>
+      <p>{{ mensajeCarrito }}</p>
+    </div>
+
+    <button class="cerrar-modal" (click)="mensajeCarrito = ''">
+      &times;
+    </button>
+  </div>
+
+  <div class="container">
+
+    <div class="titulo-seccion text-center">
+      <p class="subtitulo">NUESTRA CARTA</p>
+      <h2>Nuestras bebidas</h2>
+      <p>
+        Explora nuestra selección de bebidas y encuentra tu favorita.
+      </p>
+    </div>
+
+    <div class="filtros-bebidas">
+
+      <div>
+        <label class="form-label">Categoría</label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="categoriaSeleccionada"
+          (change)="cargarBebidas()">
+
+          <option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.strCategory">
+            {{ categoria.strCategory }}
+          </option>
+
+        </select>
+      </div>
+
+      <div>
+        <label class="form-label">Buscar por nombre</label>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ejemplo: Margarita"
+            [(ngModel)]="nombreBusqueda">
+
+          <button class="btn btn-manila" (click)="buscarPorNombre()">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label">Buscar por ingrediente</label>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ejemplo: Gin"
+            [(ngModel)]="ingredienteBusqueda">
+
+          <button class="btn btn-manila" (click)="buscarPorIngrediente()">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label">Tipo de bebida</label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="tipoAlcohol"
+          (change)="filtrarAlcohol()">
+
+          <option value="">Todas las bebidas</option>
+          <option value="Alcoholic">Alcohólicas</option>
+          <option value="Non_Alcoholic">No alcohólicas</option>
+
+        </select>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-4" *ngIf="cargando">
+      <p class="mensaje-carga">
+        Cargando bebidas e ingredientes...
+      </p>
+    </div>
+
+    <div class="text-center mt-4" *ngIf="mensaje">
+      <p class="mensaje-error">
+        {{ mensaje }}
+      </p>
+    </div>
+
+    <div class="row g-4 mt-3">
+
+      <div
+        class="col-md-6 col-lg-4 col-xl-3"
+        *ngFor="let bebida of bebidas">
+
+        <div class="card tarjeta-bebida h-100">
+
+          <img
+            [src]="bebida.strDrinkThumb"
+            [alt]="bebida.strDrink"
+            class="card-img-top"
+            (error)="imagenAlternativa($event)">
+
+          <div class="card-body">
+
+            <h5 class="card-title">
+              {{ bebida.strDrink }}
+            </h5>
+
+            <p class="precio-bebida">
+              $ {{ bebida.precio | number:'1.0-0' }}
+            </p>
+
+            <p class="tipo-bebida">
+              {{ bebida.strAlcoholic }}
+            </p>
+
+            <div class="lista-ingredientes">
+              <strong>Ingredientes:</strong>
+              <p>
+                {{ bebida.ingredientes.join(', ') }}
+              </p>
+            </div>
+
+            <button
+              class="btn btn-manila w-100"
+              (click)="agregarAlCarrito(bebida)">
+
+              <i class="bi bi-cart-plus"></i>
+              Agregar al carrito
+
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      class="text-center mt-5"
+      *ngIf="!cargando && bebidas.length === 0 && !mensaje">
+
+      <p class="sin-resultados">
+        No se encontraron bebidas.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>

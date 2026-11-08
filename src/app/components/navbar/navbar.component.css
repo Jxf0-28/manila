@@ -1,0 +1,31 @@
+
+.navbar-manila {
+  background-color: #171717;
+  padding: 12px 0;
+  border-bottom: 1px solid #a88645;
+}
+
+.logo-manila img {
+  width: 230px;
+  height: auto;
+  display: block;
+}
+
+.navbar-manila .nav-link {
+  color: #eeeeee;
+  margin-left: 18px;
+  font-size: 15px;
+}
+
+.navbar-manila .nav-link:hover {
+  color: #c9a45c;
+}
+
+.separador-nav {
+  border-left: 1px solid #a88645;
+  margin: 5px 15px;
+}
+
+.enlace-juego {
+  color: #eeeeee;
+}

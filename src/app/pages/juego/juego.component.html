@@ -1,0 +1,73 @@
+
+<section class="seccion-juego">
+  <div class="container">
+
+    <div class="titulo-seccion text-center">
+      <p class="subtitulo">DIVIÉRTETE EN MANILA</p>
+      <h2>Encuentra los sabores</h2>
+      <p>Encuentra el plato de comida y la bebida escondidos.</p>
+    </div>
+
+    <div *ngIf="cargando" class="cargando text-center">
+      <p>{{ mensaje }}</p>
+    </div>
+
+    <div class="tablero" *ngIf="!cargando && comida && bebida">
+
+      <button
+        *ngFor="let casilla of casillas; let i = index"
+        class="casilla"
+        [class.encontrada]="encontradas.includes(i)"
+        [disabled]="encontradas.includes(i) || terminado"
+        (click)="seleccionar(i)">
+
+        <ng-container *ngIf="encontradas.includes(i); else oculta">
+
+          <img
+            [src]="mostrarImagen(i)"
+            [alt]="obtenerNombre(i)"
+            [title]="obtenerNombre(i)">
+
+        </ng-container>
+
+        <ng-template #oculta>
+          ?
+        </ng-template>
+
+      </button>
+
+    </div>
+
+    <div class="mensaje-juego text-center">
+
+      <h4>{{ mensaje }}</h4>
+
+      <p class="intentos" *ngIf="!cargando && comida && bebida">
+        Intentos: {{ intentos }}
+      </p>
+
+      <div *ngIf="terminado" class="resultado">
+
+        <p>
+          <strong>Comida:</strong> {{ comida?.strMeal }}
+        </p>
+
+        <p>
+          <strong>Bebida:</strong> {{ bebida?.strDrink }}
+        </p>
+
+      </div>
+
+      <button
+        class="btn btn-manila"
+        (click)="iniciarJuego()"
+        [disabled]="cargando">
+
+        Jugar de nuevo
+
+      </button>
+
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,145 @@
+
+<section class="seccion-comidas">
+
+  <!-- Modal de confirmación -->
+  <div class="modal-carrito" *ngIf="mensajeCarrito">
+    <div class="modal-icono">
+      <i class="bi bi-check-lg"></i>
+    </div>
+
+    <div class="modal-contenido">
+      <h6>¡Producto agregado!</h6>
+      <p>{{ mensajeCarrito }}</p>
+    </div>
+
+    <button class="cerrar-modal" (click)="mensajeCarrito = ''">
+      &times;
+    </button>
+  </div>
+
+  <div class="container">
+
+    <div class="titulo-seccion text-center">
+      <p class="subtitulo">NUESTRA CARTA</p>
+      <h2>Nuestros platos</h2>
+      <p>Descubre nuestros sabores y encuentra tu plato favorito.</p>
+    </div>
+
+    <div class="filtros-comidas">
+
+      <div>
+        <label class="form-label">Categoría</label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="categoriaSeleccionada"
+          (change)="cargarComidas()">
+
+          <option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.strCategory">
+            {{ categoria.strCategory }}
+          </option>
+
+        </select>
+      </div>
+
+      <div>
+        <label class="form-label">Buscar por nombre</label>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ejemplo: Arrabiata"
+            [(ngModel)]="nombreBusqueda">
+
+          <button class="btn btn-manila" (click)="buscarPorNombre()">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label">Buscar por ingrediente</label>
+
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ejemplo: Chicken"
+            [(ngModel)]="ingredienteBusqueda">
+
+          <button class="btn btn-manila" (click)="buscarPorIngrediente()">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-4" *ngIf="cargando">
+      <p class="mensaje-carga">Cargando comidas e ingredientes...</p>
+    </div>
+
+    <div class="text-center mt-4" *ngIf="mensaje">
+      <p class="mensaje-error">{{ mensaje }}</p>
+    </div>
+
+    <div class="row g-4 mt-3">
+
+      <div
+        class="col-md-6 col-lg-4 col-xl-3"
+        *ngFor="let comida of comidas">
+
+        <div class="card tarjeta-comida h-100">
+
+          <img
+            [src]="comida.strMealThumb"
+            [alt]="comida.strMeal"
+            class="card-img-top"
+            (error)="imagenAlternativa($event)">
+
+          <div class="card-body">
+
+            <h5 class="card-title">{{ comida.strMeal }}</h5>
+
+            <p class="precio-comida">
+              $ {{ comida.precio | number:'1.0-0' }}
+            </p>
+
+            <div class="lista-ingredientes">
+              <strong>Ingredientes:</strong>
+              <p>{{ comida.ingredientes.join(', ') }}</p>
+            </div>
+
+            <p
+              class="ingrediente-confirmado"
+              *ngIf="busquedaIngredienteActiva && comida.tieneIngrediente">
+              ✓ Contiene {{ ingredienteBuscado }}
+            </p>
+
+            <button
+              class="btn btn-manila w-100"
+              (click)="agregarAlCarrito(comida)">
+              Agregar al carrito
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      class="text-center mt-5"
+      *ngIf="!cargando && comidas.length === 0 && !mensaje">
+
+      <p class="sin-resultados">No se encontraron comidas.</p>
+
+    </div>
+
+  </div>
+
+</section>
