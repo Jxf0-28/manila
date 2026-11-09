@@ -1,0 +1,69 @@
+
+.footer-manila {
+  background-color: #111111;
+  padding: 55px 0 20px;
+  border-top: 2px solid #a88645;
+}
+
+.logo-footer {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+
+.logo-footer span {
+  color: #c9a45c;
+}
+
+.footer-manila h5 {
+  color: #c9a45c;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.descripcion-footer {
+  color: #aaaaaa;
+  line-height: 1.8;
+  max-width: 350px;
+}
+
+.footer-manila p {
+  color: #aaaaaa;
+  line-height: 1.7;
+}
+
+.enlaces-footer {
+  list-style: none;
+  padding: 0;
+}
+
+.enlaces-footer li {
+  margin-bottom: 10px;
+}
+
+.enlaces-footer a {
+  color: #aaaaaa;
+  text-decoration: none;
+}
+
+.enlaces-footer a:hover {
+  color: #c9a45c;
+}
+
+.linea-footer {
+  border-top: 1px solid #594a2e;
+  margin-top: 35px;
+  margin-bottom: 20px;
+}
+
+.copyright {
+  text-align: center;
+}
+
+.copyright p {
+  color: #777777;
+  font-size: 13px;
+  margin: 0;
+}

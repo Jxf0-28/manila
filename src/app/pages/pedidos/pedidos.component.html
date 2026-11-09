@@ -1,0 +1,206 @@
+
+<section class="seccion-pedidos">
+
+  <div class="container">
+
+    <div class="titulo-seccion text-center">
+
+      <p class="subtitulo">MANILA RESTAURANTE</p>
+
+      <h2>Mi carrito</h2>
+
+      <p>Revisa tus productos antes de confirmar tu pedido.</p>
+
+    </div>
+
+    <!-- Datos del cliente -->
+
+    <div class="datos-cliente">
+
+      <h4>Datos para la entrega</h4>
+
+      <p class="descripcion-cliente">
+        Completa tus datos para preparar tu pedido.
+      </p>
+
+      <div class="row g-3">
+
+        <div class="col-md-6">
+
+          <label class="form-label">Nombre completo</label>
+
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ingresa tu nombre completo"
+            [(ngModel)]="nombre">
+
+        </div>
+
+        <div class="col-md-6">
+
+          <label class="form-label">Celular</label>
+
+          <input
+            type="tel"
+            class="form-control"
+            placeholder="Ingresa tu número de celular"
+            [(ngModel)]="celular">
+
+        </div>
+
+        <div class="col-12">
+
+          <label class="form-label">Dirección</label>
+
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Ingresa la dirección de entrega"
+            [(ngModel)]="direccion">
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Carrito y resumen -->
+
+    <div class="contenido-pedidos">
+
+      <div class="carrito">
+
+        <h4>Productos agregados</h4>
+
+        <!-- Carrito vacío -->
+
+        <div class="carrito-vacio" *ngIf="productos.length === 0">
+
+          <h5>Tu carrito está vacío</h5>
+
+          <p>
+            Cuando agregues comidas o bebidas desde nuestro menú,
+            aparecerán aquí.
+          </p>
+
+        </div>
+
+        <!-- Productos -->
+
+        <div
+          class="producto-carrito"
+          *ngFor="let producto of productos">
+
+          <img
+            [src]="producto.imagen"
+            [alt]="producto.nombre">
+
+          <div class="informacion-producto">
+
+            <h5>{{ producto.nombre }}</h5>
+
+            <p class="tipo-producto">
+              {{ producto.tipo === 'comida' ? 'Comida' : 'Bebida' }}
+            </p>
+
+            <p class="precio-producto">
+              $ {{ producto.precio | number:'1.0-0' }}
+            </p>
+
+            <div class="controles-cantidad">
+
+              <button
+                class="btn-cantidad"
+                (click)="cambiarCantidad(producto, -1)"
+                [disabled]="producto.cantidad <= 1">
+                −
+              </button>
+
+              <span>{{ producto.cantidad }}</span>
+
+              <button
+                class="btn-cantidad"
+                (click)="cambiarCantidad(producto, 1)">
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+          <div class="acciones-producto">
+
+            <p class="subtotal-producto">
+              $ {{ (producto.precio * producto.cantidad) | number:'1.0-0' }}
+            </p>
+
+            <button
+              class="btn-eliminar"
+              (click)="eliminarProducto(producto)">
+              Eliminar
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Resumen -->
+
+      <div class="resumen-pedido">
+
+        <h4>Resumen del pedido</h4>
+
+        <div class="detalle-total">
+
+          <p>Productos:</p>
+
+          <span>{{ calcularCantidadProductos() }}</span>
+
+        </div>
+
+        <div class="detalle-total">
+
+          <p>Subtotal:</p>
+
+          <span>
+            $ {{ calcularSubtotal() | number:'1.0-0' }}
+          </span>
+
+        </div>
+
+        <div class="linea-total"></div>
+
+        <div class="total-final">
+
+          <h5>Total a pagar</h5>
+
+          <h3>
+            $ {{ calcularSubtotal() | number:'1.0-0' }}
+          </h3>
+
+        </div>
+
+        <button
+          class="btn btn-manila"
+          [disabled]="productos.length === 0"
+          (click)="confirmarPedido()">
+          Confirmar pedido
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- Mensajes -->
+
+    <div class="mensaje-pedido text-center" *ngIf="mensaje">
+      {{ mensaje }}
+    </div>
+
+  </div>
+
+</section>
+  
